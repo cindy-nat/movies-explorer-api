@@ -6,4 +6,4 @@ module.exports = {
   PORT,
   MONGO_URL,
   NODE_ENV,
-}
+};
