@@ -6,7 +6,7 @@ const NotCorrectDataError = require('../errors/NotCorrectDataError');
 const NotAuthorizedError = require('../errors/NotAuthorizedError');
 const UserExistsError = require('../errors/UserExistsError');
 const { OK_CODE } = require('../errors/ErrorsCodes');
-const { JWT_SECRET} = require('../config');
+const { JWT_SECRET } = require('../config');
 
 // получить данные пользователя
 const getUserInfo = (req, res, next) => {
@@ -27,7 +27,7 @@ const updateUserInfo = (req, res, next) => {
     .catch(next);
 };
 
-//создать нового пользователя
+// создать нового пользователя
 const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
   user.findOne({ email })
@@ -39,7 +39,7 @@ const createUser = (req, res, next) => {
           .then((hash) => user.create({
             email,
             password: hash,
-            name
+            name,
           }))
           .then((userData) => {
             if (!userData) {
