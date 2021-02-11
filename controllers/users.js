@@ -30,27 +30,24 @@ const updateUserInfo = (req, res, next) => {
 // создать нового пользователя
 const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
-  user.findOne({ email })
-    .then((userEmail) => {
-      if (userEmail) {
-        throw new UserExistsError('Пользователь с такой почтой существует');
-      } else {
-        bcrypt.hash(password, 10)
-          .then((hash) => user.create({
-            email,
-            password: hash,
-            name,
-          }))
-          .then((userData) => {
-            if (!userData) {
-              throw new NotCorrectDataError('Переданые некорректные данные для создания пользователя');
-            }
-            res.status(OK_CODE).send({ email: userData.email });
-          })
-          .catch(next);
-      }
+  return bcrypt.hash(password, 10)
+    .then((hash) => user.create({
+      email,
+      password: hash,
+      name,
     })
-    .catch(next);
+      .then((userData) => {
+        res.status(OK_CODE).send({ email: userData.email });
+      })
+      .catch((err) => {
+        if (err.code === 11000) {
+          next(new UserExistsError('Пользователь с такой почтой существует'));
+        }
+        if (err.name === 'ValidationError') {
+          next(new NotCorrectDataError('Переданы некорректные данные для создания пользователя'));
+        }
+        next(err);
+      }));
 };
 
 // войти в пользователя
