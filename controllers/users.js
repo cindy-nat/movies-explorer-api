@@ -4,7 +4,7 @@ const user = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const NotCorrectDataError = require('../errors/NotCorrectDataError');
 const NotAuthorizedError = require('../errors/NotAuthorizedError');
-const UserExistsError = require('../errors/UserExistsError');
+const ExistsError = require('../errors/ExistsError');
 const { OK_CODE } = require('../errors/ErrorsCodes');
 const { JWT_SECRET } = require('../config');
 
@@ -41,7 +41,7 @@ const createUser = (req, res, next) => {
       })
       .catch((err) => {
         if (err.code === 11000) {
-          next(new UserExistsError('Пользователь с такой почтой существует'));
+          next(new ExistsError('Пользователь с такой почтой существует'));
         }
         if (err.name === 'ValidationError') {
           next(new NotCorrectDataError('Переданы некорректные данные для создания пользователя'));
