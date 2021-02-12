@@ -50,7 +50,7 @@ const movieSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
   },
   movieId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
   },
   nameRU: {
     type: String,
