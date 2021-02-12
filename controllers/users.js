@@ -64,9 +64,10 @@ const login = (req, res, next) => {
 };
 
 // выйти из пользователя
-const logout = (req, res) => {
+const logout = (req, res, next) => {
   res.cookie('jwt', '', { maxAge: -1, httpOnly: true, sameSite: true })
-    .send({ message: 'Logged out' });
+    .send({ message: 'Logged out' })
+    .catch(next);
 };
 
 module.exports = {

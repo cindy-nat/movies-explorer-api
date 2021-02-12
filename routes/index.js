@@ -9,7 +9,7 @@ router.post('/signin', login);
 
 // доступен после авторизации!
 router.use('/users', auth, userRouter);
-router.get('/logout', auth, logout);
+router.post('/logout', auth, logout);
 
 router.use('/*', (req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
