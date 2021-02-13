@@ -3,12 +3,19 @@ const NotFoundError = require('../errors/NotFoundError');
 const NotCorrectDataError = require('../errors/NotCorrectDataError');
 const ExistsError = require('../errors/ExistsError');
 const NoRightsError = require('../errors/NoRightsError');
-const { OK_CODE } = require('../errors/ErrorsCodes');
+const {
+  OK_CODE,
+  NOT_FOUND_MOVIES,
+  NOT_CORRECT_MOVIE_DATA,
+  FILM_EXISTS,
+  NOT_FOUND_MOVIE,
+  NO_RIGHTS_MOVIE,
+} = require('../errors/ErrorsCodes');
 
 const getMovies = (req, res, next) => {
   movie.find({ owner: req.user._id })
     .then((movies) => {
-      if (!movies || movies.length === 0) { throw new NotFoundError('Фильмы не найдены'); }
+      if (!movies || movies.length === 0) { throw new NotFoundError(NOT_FOUND_MOVIES); }
       res.status(OK_CODE).send(movies);
     })
     .catch(next);
@@ -46,12 +53,12 @@ const createMovieHandler = (req, res, next) => {
     },
   )
     .then((movieItem) => {
-      if (!movieItem) { throw new NotCorrectDataError('Переданы некорректные данные для добавления фильма'); }
+      if (!movieItem) { throw new NotCorrectDataError(NOT_CORRECT_MOVIE_DATA); }
       res.status(OK_CODE).send(movieItem);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new NotCorrectDataError('Переданы некорректные данные для добавления фильма'));
+        next(new NotCorrectDataError(NOT_CORRECT_MOVIE_DATA));
       }
       next(err);
     });
@@ -65,7 +72,7 @@ const createMovie = (req, res, next) => {
       } else {
         movies.forEach((movieItem) => {
           if (movieItem.owner.toString() === req.user._id) {
-            throw new ExistsError('Фильм уже добавлен в избранное');
+            throw new ExistsError(FILM_EXISTS);
           } else {
             createMovieHandler(req, res, next);
           }
@@ -78,10 +85,10 @@ const createMovie = (req, res, next) => {
 const removeMovie = (req, res, next) => {
   const { movieId } = req.params;
   movie.findById(movieId)
-    .orFail(new NotFoundError('Карточка не найдена'))
+    .orFail(new NotFoundError(NOT_FOUND_MOVIE))
     .then((movieItem) => {
       if (movieItem.owner.toString() !== req.user._id) {
-        throw new NoRightsError('Вы пытаетесь удалить чужую карточку');
+        throw new NoRightsError(NO_RIGHTS_MOVIE);
       } else {
         movie.deleteOne(movieItem)
           .then((deletedCard) => res.status(OK_CODE).send(deletedCard));
