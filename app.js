@@ -2,11 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
 const { errors } = require('celebrate');
 const routes = require('./routes/index');
 const errorsHandler = require('./middlewares/errorsHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { PORT, MONGO_URL } = require('./config');
+const { PORT, MONGO_URL, CORS_OPTIONS } = require('./config');
 
 const app = express();
 mongoose.connect(MONGO_URL, {
@@ -16,6 +17,8 @@ mongoose.connect(MONGO_URL, {
   useUnifiedTopology: true,
 });
 
+app.use('*', cors(CORS_OPTIONS));
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(requestLogger);
