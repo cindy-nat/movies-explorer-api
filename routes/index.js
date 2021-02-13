@@ -4,9 +4,10 @@ const movieRouter = require('./movies');
 const { createUser, login, logout } = require('../controllers/users');
 const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/NotFoundError');
+const checkPassword = require('../middlewares/check-password');
 
-router.post('/signup', createUser);
-router.post('/signin', login);
+router.post('/signup', checkPassword, createUser);
+router.post('/signin', checkPassword, login);
 
 // доступен после авторизации!
 router.use('/users', auth, userRouter);
