@@ -5,9 +5,10 @@ const { createUser, login, logout } = require('../controllers/users');
 const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/NotFoundError');
 const checkPassword = require('../middlewares/check-password');
+const { validateSignUpRoute, validateSignInRoute } = require('../middlewares/validations');
 
-router.post('/signup', checkPassword, createUser);
-router.post('/signin', checkPassword, login);
+router.post('/signup', validateSignUpRoute, checkPassword, createUser);
+router.post('/signin', validateSignInRoute, checkPassword, login);
 
 // доступен после авторизации!
 router.use('/users', auth, userRouter);
