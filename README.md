@@ -14,7 +14,13 @@ Node.js Express Mongo
 
 ## Роуты:
 1. GET /users/me - возвращает информацию о пользователе (email и имя)
-2. PUT /users/me - обновляет информацию о пользователе (email и имя)
+2. PATCH /users/me - обновляет информацию о пользователе (email и имя)
 3. GET /movies - возвращает все сохранённые пользователем фильмы
 4. POST /movies - создаёт фильм с переданными в теле данными
 5. DELETE /movies/movieId - удаляет сохранённый фильм по _id
+6. POST /signup - создаёт пользователя
+7. POST /signin - авторизирует пользователя
+8. POST /logout - пользователь выходит из учетной записи
+
+## Ссылка:
+http://api.cindy-movies.students.nomoredomains.monster
