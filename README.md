@@ -23,4 +23,5 @@ Node.js Express Mongo
 8. POST /logout - пользователь выходит из учетной записи
 
 ## Ссылка:
+IP: 130.193.54.248
 http://api.cindy-movies.students.nomoredomains.monster
