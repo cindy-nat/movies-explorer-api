@@ -73,10 +73,9 @@ const createMovie = (req, res, next) => {
         movies.forEach((movieItem) => {
           if (movieItem.owner.toString() === req.user._id) {
             throw new ExistsError(FILM_EXISTS);
-          } else {
-            createMovieHandler(req, res, next);
           }
         });
+        createMovieHandler(req, res, next);
       }
     })
     .catch(next);
@@ -94,7 +93,12 @@ const removeMovie = (req, res, next) => {
           .then((deletedCard) => res.status(OK_CODE).send(deletedCard));
       }
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'NoRightsError') {
+        next(new NoRightsError(NO_RIGHTS_MOVIE));
+      }
+      next(err);
+    });
 };
 
 module.exports = {

@@ -16,7 +16,7 @@ const validateSignUpRoute = celebrate({
       .messages({
         'string.min': 'Поле name должно содержать минимум 2 знака',
         'string.max': 'Поле name должно содержать максимум 30 знаков',
-        'string.required': 'Поле name должно быть заполнено',
+        'any.required': 'Поле name должно быть заполнено',
       }),
   }),
 });
@@ -30,7 +30,7 @@ const validateSignInRoute = celebrate({
       }),
     password: Joi.string().required()
       .messages({
-        'string.required': 'Поле password должно быть заполнено',
+        'any.required': 'Поле password должно быть заполнено',
       }),
   }),
 });
@@ -46,7 +46,7 @@ const validateChangeUserData = celebrate({
       .messages({
         'string.min': 'Поле name должно содержать минимум 2 знака',
         'string.max': 'Поле name должно содержать максимум 30 знаков',
-        'string.required': 'Поле name должно быть заполнено',
+        'any.required': 'Поле name должно быть заполнено',
       }),
   }),
 });
@@ -55,23 +55,23 @@ const validateCreateMovie = celebrate({
   body: Joi.object().keys({
     country: Joi.string().required()
       .messages({
-        'string.required': 'Поле country должно быть заполнено',
+        'any.required': 'Поле country должно быть заполнено',
       }),
     director: Joi.string().required()
       .messages({
-        'string.required': 'Поле director должно быть заполнено',
+        'any.required': 'Поле director должно быть заполнено',
       }),
     duration: Joi.number().required()
       .messages({
-        'number.required': 'Поле duration должно быть заполнено',
+        'any.required': 'Поле duration должно быть заполнено',
       }),
     year: Joi.string().required()
       .messages({
-        'string.required': 'Поле year должно быть заполнено',
+        'any.required': 'Поле year должно быть заполнено',
       }),
     description: Joi.string().required()
       .messages({
-        'string.required': 'Поле description должно быть заполнено',
+        'any.required': 'Поле description должно быть заполнено',
       }),
     image: Joi.string().required().custom((value, helpers) => {
       if (validator.isURL(value)) {
@@ -80,7 +80,7 @@ const validateCreateMovie = celebrate({
       return helpers.message('Поле image должно содержать валидную ссылку');
     })
       .messages({
-        'string.required': 'Поле image должно быть заполнено',
+        'any.required': 'Поле image должно быть заполнено',
       }),
     trailer: Joi.string().required().custom((value, helpers) => {
       if (validator.isURL(value)) {
@@ -89,19 +89,19 @@ const validateCreateMovie = celebrate({
       return helpers.message('Поле trailer должно содержать валидную ссылку');
     })
       .messages({
-        'string.required': 'Поле trailer должно быть заполнено',
+        'any.required': 'Поле trailer должно быть заполнено',
       }),
     movieId: Joi.number().required()
       .messages({
-        'number.required': 'Поле movieId должно быть заполнено',
+        'any.required': 'Поле movieId должно быть заполнено',
       }),
     nameRU: Joi.string().required()
       .messages({
-        'string.required': 'Поле nameRU должно быть заполнено',
+        'any.required': 'Поле nameRU должно быть заполнено',
       }),
     nameEN: Joi.string().required()
       .messages({
-        'string.required': 'Поле nameEN должно быть заполнено',
+        'any.required': 'Поле nameEN должно быть заполнено',
       }),
     thumbnail: Joi.string().required().custom((value, helpers) => {
       if (validator.isURL(value)) {
@@ -110,7 +110,7 @@ const validateCreateMovie = celebrate({
       return helpers.message('Поле thumbnail должно содержать валидную ссылку');
     })
       .messages({
-        'string.required': 'Поле thumbnail должно быть заполнено',
+        'any.required': 'Поле thumbnail должно быть заполнено',
       }),
   }),
 });
