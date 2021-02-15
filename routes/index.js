@@ -13,7 +13,7 @@ router.post('/signin', validateSignInRoute, checkPassword, login);
 // доступен после авторизации!
 router.use('/users', auth, userRouter);
 router.use('/movies', auth, movieRouter);
-router.post('/logout', auth, logout);
+router.post('/signout', auth, logout);
 
 router.use('/*', (req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
