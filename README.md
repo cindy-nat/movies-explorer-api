@@ -21,7 +21,3 @@ Node.js Express Mongo
 6. POST /signup - создаёт пользователя
 7. POST /signin - авторизирует пользователя
 8. POST /signout - пользователь выходит из учетной записи
-
-## Ссылка:
-IP: 130.193.54.248
-http://api.cindy-movies.students.nomoredomains.monster
